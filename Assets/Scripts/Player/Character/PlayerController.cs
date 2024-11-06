@@ -15,10 +15,10 @@ public class PlayerController : MonoBehaviour
     public float detectionRadius = 5f;
     public float Magnitude;
 
-    private PhotonView photonView;
-
-    private Rigidbody rb;
     private float animationSpeed;
+
+    private PhotonView photonView;
+    private Rigidbody rb;
     private Animator animator;
     private Transform cameraTransform;
 

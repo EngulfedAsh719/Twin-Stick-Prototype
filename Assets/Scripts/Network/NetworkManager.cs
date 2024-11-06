@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
+using Photon.Pun; 
 using Photon.Realtime;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
-{
+{    
     public GameObject playerPrefab;
+
     public List<Transform> spawnPoints;
 
     private void Start()
@@ -56,16 +57,5 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         CameraController.Instance.FindPlayer(namePerson);
 
         HealthSystem.Instance.UpdateUI();
-    }
-
-    public void SayHello()
-    {
-        this.photonView.RPC("Hello", RpcTarget.All, (byte)PhotonNetwork.LocalPlayer.ActorNumber);
-    }
-
-    [PunRPC]
-    public void Hello(byte playerID)
-    {
-        Debug.Log($"Player ID {playerID} said hello!");
     }
 }

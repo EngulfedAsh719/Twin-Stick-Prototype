@@ -1,9 +1,10 @@
 using UnityEngine.UI;
 using UnityEngine;
+using Photon.Pun;
 
-public class HealthSystem : MonoBehaviour
+public class HealthSystem : MonoBehaviourPunCallbacks
 {
-    public static HealthSystem Instance { get; set; }
+    public static HealthSystem Instance { get; private set; }
 
     public float currentHealth, maxHealth = 100f, targetHealth;
 
@@ -19,13 +20,12 @@ public class HealthSystem : MonoBehaviour
     private void Start()
     {
         currentHealth = targetHealth = maxHealth;
-
         UpdateUI();
     }
 
     private void Update()
     {
-        if (currentHealth != targetHealth)
+        if (Mathf.Abs(currentHealth - targetHealth) > 0.01f)
         {
             currentHealth = Mathf.Lerp(currentHealth, targetHealth, Time.deltaTime * lerpSpeed);
             UpdateUI();
@@ -40,8 +40,14 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    public void IncreaseHealth(float amount)
+    [PunRPC]
+    public void DecreaseHealthRPC(int amount)
     {
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        if (photonView.IsMine)
+        {
+            targetHealth -= amount;
+            targetHealth = Mathf.Clamp(targetHealth, 0, maxHealth);
+            UpdateUI();
+        }
     }
 }

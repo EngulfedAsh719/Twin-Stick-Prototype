@@ -11,17 +11,13 @@ public class ItemCollector : MonoBehaviour
         if (item != null)
         {
             Destroy(collision.gameObject);
-            InventorySystem.Instance.AddItem(item);
-
             if (speedBoost != null)
             {
-                Debug.Log("Столкновение с SpeedBoostItem");
                 speedBoost.Use(gameObject);
             }
 
             else if (healthBoost != null)
             {
-                Debug.Log("Столкновение с HealthBoost");
                 healthBoost.Use(gameObject);
             }
         }

@@ -27,7 +27,6 @@ public class InventorySystem : MonoBehaviour
     private Vector2 startPosition = new Vector2(55, -50);
 
     private PhotonView photonView;
-
     public Animator animator;
 
     private void Awake()
@@ -38,8 +37,8 @@ public class InventorySystem : MonoBehaviour
     private void Start()
     {
         inventoryPanel.SetActive(false);
-
-        photonView = GetComponent<PhotonView>();
+        
+        photonView = GetComponentInParent<PhotonView>();
         animator = GetComponent<Animator>();
     }
 
@@ -48,10 +47,6 @@ public class InventorySystem : MonoBehaviour
         if (!photonView.IsMine)
         {
             playerCanvas.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("Canvas не найден");
         }
     }
 

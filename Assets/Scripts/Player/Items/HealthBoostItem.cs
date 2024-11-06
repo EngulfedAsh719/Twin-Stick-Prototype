@@ -1,12 +1,16 @@
 using UnityEngine;
+using Photon.Pun;
 
 public class HealthBoostItem : Item
 {
-    public int healthBoost;
+    public int changeAmount;
+
     public override void Use(GameObject player)
     {
-        HealthSystem.Instance.IncreaseHealth(15);
-        HealthSystem.Instance.UpdateUI();
-        Debug.Log($"Использован предмет {itemName}");
+        PhotonView photonView = player.GetComponent<PhotonView>();
+        if (photonView != null && photonView.IsMine)
+        {
+            photonView.RPC("DecreaseHealthRPC", RpcTarget.AllBuffered, changeAmount);
+        }
     }
 }
